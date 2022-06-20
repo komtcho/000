@@ -49,5 +49,7 @@ class DatabaseSeeder extends Seeder
                 ]
             )
             ->create();
+
+        \App\Models\Bus::factory(1)->create();
     }
 }
