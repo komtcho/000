@@ -46,5 +46,46 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         \App\Models\Bus::factory(1)->create();
+
+        \App\Models\Ticket::factory(6)
+            ->sequence(
+                [
+                    'user_id' => 1,
+                    'bus_id' => 1,
+                    'station_from_id' => 1,
+                    'station_to_id' => 6,
+                ],
+                [
+                    'user_id' => 2,
+                    'bus_id' => 1,
+                    'station_from_id' => 1,
+                    'station_to_id' => 5,
+                ],
+                [
+                    'user_id' => 3,
+                    'bus_id' => 1,
+                    'station_from_id' => 1,
+                    'station_to_id' => 6,
+                ],
+                [
+                    'user_id' => 4,
+                    'bus_id' => 1,
+                    'station_from_id' => 2,
+                    'station_to_id' => 5,
+                ],
+                [
+                    'user_id' => 5,
+                    'bus_id' => 1,
+                    'station_from_id' => 2,
+                    'station_to_id' => 6,
+                ],
+                [
+                    'user_id' => 6,
+                    'bus_id' => 1,
+                    'station_from_id' => 2,
+                    'station_to_id' => 4,
+                ],
+            )
+            ->create();
     }
 }
