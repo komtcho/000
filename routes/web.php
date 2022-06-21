@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,6 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth', CheckAdminMiddleware::class])->name('dashboard');
 
 require __DIR__.'/auth.php';
