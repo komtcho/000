@@ -34,14 +34,10 @@ class Booking extends Component
             ->where('id', '<=', $this->station_to_id)
             ->count();
 
-        $seats_not_available = Ticket::where('bus_id', '=', $this->bus_id)
-            ->where('station_to_id', '>=', $this->station_from_id)
-            ->where('station_from_id', '<=', $this->station_to_id)
+            $this->seatsAvailable = Ticket::where('bus_id', '=', $this->bus_id)
+            ->where('station_from_id', '>=', $this->station_from_id)
+            ->where('station_to_id', '<=', $this->station_to_id)
             ->count();
-
-        $this->seatsAvailable = $seats_not_available;
-
-        // dd($this->seatsAvailable);
     }
 
     public function book()
