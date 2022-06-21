@@ -19,7 +19,43 @@ class BookingTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * Test booking seats available.
+     *
+     * @return void
+     */
+    public function test_booking_seats_available()
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'authorization' => 'Bearer ' . $token,
+        ])->get('api/book?bus_id=1&station_from_id=1&station_to_id=2');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Test booking seats available not validation.
+     *
+     * @return void
+     */
+    public function test_booking_seats_available_not_validation()
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'authorization' => 'Bearer ' . $token,
+        ])->get('api/book?bus_id=1&station_to_id=2');
+
+        $response->assertStatus(422);
+    }
+
+    /**
+     * Test booking.
      *
      * @return void
      */
@@ -41,7 +77,7 @@ class BookingTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * Test booking not authorize.
      *
      * @return void
      */
@@ -59,7 +95,7 @@ class BookingTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * Test booking select station not available.
      *
      * @return void
      */
@@ -81,7 +117,7 @@ class BookingTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * Test booking number seats exceeded maximum.
      *
      * @return void
      */

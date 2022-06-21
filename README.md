@@ -21,6 +21,7 @@ Fleet-management system
 
 ### Testing
 
-You can test Features by run `php artisan test`
+- Create SQLite file for test `touch database/database.sqlite`
+- You can test Features by run `composer test`
 
 Thanks.
