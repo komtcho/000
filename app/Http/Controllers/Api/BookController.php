@@ -8,6 +8,26 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
+    public function index(Request $request)
+    {
+        $validatedData = $request->validate([
+            'bus_id' => 'required|exists:buses,id',
+            'station_from_id' => 'required|exists:stations,id',
+            'station_to_id' => 'required|exists:stations,id',
+        ]);
+
+        $tickets = Ticket::where('bus_id', '=', $validatedData['bus_id'])
+            ->where('station_from_id', '>=', $validatedData['station_from_id'])
+            ->where('station_to_id', '<=', $validatedData['station_to_id'])
+            ->count();
+
+        return response()->json([
+            'data' => [
+                'seats_available' => (12 - $tickets),
+            ],
+        ]);
+    }
+
     public function create(Request $request)
     {
         $validatedData = $request->validate([
