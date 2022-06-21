@@ -10,6 +10,9 @@ class BusController extends Controller
     public function index()
     {
         $buses = Bus::get();
-        return response()->json($buses);
+
+        return response()->json([
+            'data' => $buses
+        ], 200);
     }
 }
