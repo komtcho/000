@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bus;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,8 @@ class BookController extends Controller
             'station_to_id' => 'required|exists:stations,id',
         ]);
 
+        $bus = Bus::find($validatedData['bus_id']);
+
         $tickets = Ticket::where('bus_id', '=', $validatedData['bus_id'])
             ->where('station_from_id', '>=', $validatedData['station_from_id'])
             ->where('station_to_id', '<=', $validatedData['station_to_id'])
@@ -23,7 +26,7 @@ class BookController extends Controller
 
         return response()->json([
             'data' => [
-                'seats_available' => (12 - $tickets),
+                'seats_available' => ($bus->seats_limit - $tickets),
             ],
         ]);
     }
@@ -36,12 +39,14 @@ class BookController extends Controller
             'station_to_id' => 'required|exists:stations,id',
         ]);
 
+        $bus = Bus::find($validatedData['bus_id']);
+
         $seats_not_available = Ticket::where('bus_id', '=', $validatedData['bus_id'])
             ->where('station_from_id', '>=', $validatedData['station_from_id'])
             ->where('station_to_id', '<=', $validatedData['station_to_id'])
             ->count();
 
-        if ($seats_not_available >= 12) {
+        if ($seats_not_available >= $bus->seats_limit) {
             return response()->json([
                 'message' => 'Seats not available'
             ], 400);
