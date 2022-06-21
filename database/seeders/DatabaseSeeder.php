@@ -24,27 +24,21 @@ class DatabaseSeeder extends Seeder
         \App\Models\Station::factory(6)
             ->sequence(
                 [
-                    'next_station_id' => 2,
                     'name' => 'Asyut'
                 ],
                 [
-                    'next_station_id' => 3,
                     'name' => 'AlMinya'
                 ],
                 [
-                    'next_station_id' => 4,
                     'name' => 'AlFayyum'
                 ],
                 [
-                    'next_station_id' => 5,
                     'name' => 'Giza'
                 ],
                 [
-                    'next_station_id' => 6,
                     'name' => 'Cairo'
                 ],
                 [
-                    'next_station_id' => null,
                     'name' => 'Alexandria'
                 ]
             )
